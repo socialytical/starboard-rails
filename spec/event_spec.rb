@@ -42,8 +42,8 @@ describe Starboard::Event do
   it "should serialize for posting" do
     to_post = Starboard::Event.new(:name => 'event', :user => 'user').to_post
     
-    to_post["event%5Dname%5D"].should == 'event'
-    to_post["user%5Did%5D"].should == 'user'
-    to_post.keys.include?("event%5Doccurred_at%5D").should == true
+    to_post["event[name]"].should == 'event'
+    to_post["user[id]"].should == 'user'
+    to_post.keys.include?("event[occurred_at]").should == true
   end
 end

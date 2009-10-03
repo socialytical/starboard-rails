@@ -57,9 +57,13 @@ describe Starboard::Worker do
   end
   
   it "should record a message" do
-    address = mock("address")
+    Starboard::Configuration.should_receive(:application_key).and_return('1')
+    
+    URI.should_receive(:parse).with("http://api.starboardhq.com/applikations/1/events").and_return(:address)
+    
     message = mock("message", :to_post => {})
-    Net::HTTP.should_receive(:post_form).with(address, {})
+    
+    Net::HTTP.should_receive(:post_form).with(:address, {})
     
     @worker = Starboard::Worker.new(@queue)
     

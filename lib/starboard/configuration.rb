@@ -13,7 +13,7 @@ module Starboard
       end
       
       def application_key
-        configuration[:applikation_key]
+        configuration[:application_key]
       end
       
       def enabled?
@@ -21,7 +21,9 @@ module Starboard
       end
       
       def valid?
-        
+        configuration.key?(:application_key) and
+          not configuration[:application_key].blank?
+          configuration.key?(:enabled)
       end
     end
   end

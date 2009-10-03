@@ -23,9 +23,11 @@ module Starboard
     end
     
     def length
+      length = 0
       semaphore.synchronize {
-        @queue.length
+        length = @queue.length
       }
+      length
     end
     
     def empty?

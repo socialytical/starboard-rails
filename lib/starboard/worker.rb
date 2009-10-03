@@ -15,17 +15,18 @@ module Starboard
     end
     
     def cleanup
-      puts "Cleaning up worker thread..."
+      puts "[Starboard] => Analytics services stopped."
     end
     
-    def process
+    def process      
       loop do
-        queue.length == 0 and stopped ? break : process_one
+        (queue.length == 0 and stopped) ? break : process_one
       end
     end
     
     def process_one
-      if queue.length > 0        
+      if queue.length > 0
+        
         message = queue.dequeue
         begin
           if message.valid?
@@ -52,7 +53,9 @@ module Starboard
     end
     
     def record(message)
-      address = 'http://myaccount.starboardhq.com/events'
+      host = "api.starboardhq.com"
+      application_key = Starboard::Configuration.application_key
+      address = "http://#{host}/applikations/#{application_key}/events"
       recorded = Net::HTTP.post_form(URI.parse(address), message.to_post)
     end
     
@@ -60,15 +63,15 @@ module Starboard
       attr_accessor :worker
       attr_accessor :worker_thread
       
-      def start
-        puts "[Starboard] => Starting up analytics worker..."
-        
+      def start        
         if @worker_thread
           @worker_thread.start
         else
           @worker = new(Queue.instance)
-          
+                    
           @worker_thread ||= Thread.new do
+            puts "[Starboard] => Analytics services started."
+            
             begin
               @worker.process
             ensure

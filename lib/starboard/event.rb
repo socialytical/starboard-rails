@@ -9,16 +9,16 @@ module Starboard
     end
     
     def valid?
-      attributes.keys.include?(:name) and
-        attributes.keys.include?(:user) and
-        attributes.keys.include?(:occurred_at)
+      attributes.key?(:name) and
+        attributes.key?(:user) and
+        attributes.key?(:occurred_at)
     end
     
     def to_post
       {
-        "user%5Did%5D" => attributes[:user],
-        "event%5Dname%5D" => attributes[:name],
-        "event%5Doccurred_at%5D" => attributes[:occurred_at]
+        "user[id]" => attributes[:user],
+        "event[name]" => attributes[:name],
+        "event[occurred_at]" => attributes[:occurred_at]
       }
     end
     
