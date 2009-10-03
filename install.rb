@@ -1,5 +1,5 @@
 if File.directory?('config')
-  source = File.join(File.dirname(__FILE__), 'starboard.yml')
+  source = File.join(File.dirname(__FILE__), 'config', 'starboard.example.yml')
   destination = File.join(File.join('config', 'starboard.yml'))
   
   if File.exist?(destination)

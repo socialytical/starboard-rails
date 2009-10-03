@@ -1,0 +1,8 @@
+development:
+  enabled: true
+test:
+  enabled: false
+production:
+  enabled: true
+
+application_key: YOUR_APPLICATION_KEY
