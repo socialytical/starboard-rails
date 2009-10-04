@@ -1,5 +1,6 @@
 development:
-  enabled: true
+  enabled: false
+  debug: true
 test:
   enabled: false
 production:

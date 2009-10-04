@@ -15,7 +15,9 @@ module Starboard
     end
     
     def cleanup
-      puts "[Starboard] => Analytics services stopped."
+      if Starboard::Configuration.debug?
+        puts "[Starboard] => Analytics services stopped."
+      end
     end
     
     def process      
@@ -70,7 +72,9 @@ module Starboard
           @worker = new(Queue.instance)
                     
           @worker_thread ||= Thread.new do
-            puts "[Starboard] => Analytics services started."
+            if Starboard::Configuration.debug?
+              puts "[Starboard] => Analytics services started."
+            end
             
             begin
               @worker.process

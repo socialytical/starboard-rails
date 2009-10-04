@@ -24,7 +24,7 @@ module Starboard
     
     class << self
       def create(attributes = {})
-        Queue.instance.enqueue(new(attributes))
+        Queue.instance.enqueue(new(attributes)) if Starboard::Configuration.enabled?
       end
     end
   end

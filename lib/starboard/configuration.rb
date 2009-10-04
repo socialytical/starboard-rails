@@ -8,12 +8,12 @@ module Starboard
         @configuration = configuration
       end
       
-      def site_address
-        configuration[:site_address]
-      end
-      
       def application_key
         configuration[:application_key]
+      end
+      
+      def debug?
+        configuration[:debug]
       end
       
       def enabled?
@@ -24,6 +24,12 @@ module Starboard
         configuration.key?(:application_key) and
           not configuration[:application_key].blank?
           configuration.key?(:enabled)
+      end
+      
+      def check
+        host = "api.starboardhq.com"
+        address = "http://#{host}/applikations/#{application_key}/check"
+        Net::HTTP.get(URI.parse(address))
       end
     end
   end
