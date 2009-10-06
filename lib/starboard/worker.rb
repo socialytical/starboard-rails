@@ -70,17 +70,31 @@ module Starboard
           @worker_thread.start
         else
           @worker = new(Queue.instance)
-                    
-          @worker_thread ||= Thread.new do
-            if Starboard::Configuration.debug?
-              puts "[Starboard] => Analytics services started."
+          
+          if defined?(PhusionPassenger)
+            PhusionPassenger.on_event(:starting_worker_process) do |forked|
+              if forked
+                @worker_thread ||= spawn
+              else
+                @worker_thread ||= spawn
+              end
             end
-            
-            begin
-              @worker.process
-            ensure
-              @worker.cleanup                
-            end
+          else            
+            @worker_thread ||= spawn
+          end
+        end
+      end
+      
+      def spawn
+        Thread.new do
+          if Starboard::Configuration.debug?
+            puts "[Starboard] => Analytics services started."
+          end
+          
+          begin
+            @worker.process
+          ensure
+            @worker.cleanup                
           end
         end
       end
