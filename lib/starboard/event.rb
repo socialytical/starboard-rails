@@ -24,6 +24,10 @@ module Starboard
     
     class << self
       def create(attributes = {})
+        if Starboard::Configuration.debug?
+          puts "[Starboard] => Recording event with #{attributes.inspect}"
+        end
+        
         Queue.instance.enqueue(new(attributes)) if Starboard::Configuration.enabled?
       end
     end
