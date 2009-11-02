@@ -91,4 +91,15 @@ describe Starboard::Event do
     to_post["measures[tax]"].should == 50.50
     to_post["measures[another]"].should == nil
   end
+  
+  it "should include the client platform and version" do
+    to_post = Starboard::Event.new(
+      :name => 'event', 
+      :user => {:id => '1', :company => 'Socialytical'},
+      :measures => {:amount => 100.5, :tax => 50.50, :another => nil}
+    ).to_post
+    
+    to_post["client[platform]"].should == Starboard_Platform
+    to_post["client[version]"].should == Starboard_Version
+  end
 end

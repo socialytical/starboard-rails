@@ -40,7 +40,10 @@ module Starboard
         end
       end
       
-      post
+      post.merge(
+        'client[platform]' => Starboard_Platform, 
+        'client[version]' => Starboard_Version
+      )
     end
     
     class << self
