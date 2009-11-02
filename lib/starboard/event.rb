@@ -15,11 +15,32 @@ module Starboard
     end
     
     def to_post
-      {
-        "user[id]" => attributes[:user],
-        "event[name]" => attributes[:name],
-        "event[occurred_at]" => attributes[:occurred_at]
-      }
+      post = {}
+      user = attributes.delete(:user)
+      measures = attributes.delete(:measures)
+      event = attributes
+      
+      if user.is_a?(Hash)
+        user.each do |key, value|
+          post["user[#{key}]"] = value
+        end
+      else
+        post['user[id]'] = user
+      end
+      
+      if measures.is_a?(Hash)
+        measures.each do |key, value|
+          post["measures[#{key}]"] = value
+        end
+      end
+      
+      if event.is_a?(Hash)
+        event.each do |key, value|
+          post["event[#{key}]"] = value
+        end
+      end
+      
+      post
     end
     
     class << self

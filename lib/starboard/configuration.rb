@@ -8,6 +8,10 @@ module Starboard
         @configuration = configuration
       end
       
+      def configuration
+        @configuration || {}
+      end
+      
       def application_key
         configuration[:application_key]
       end
