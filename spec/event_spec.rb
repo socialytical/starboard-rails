@@ -66,19 +66,22 @@ describe Starboard::Event do
   
   it "should serialize with a nested user" do
     to_post = Starboard::Event.new(
-      :name => 'event', :user => {:id => '1', :company => 'Socialytical'}
+      :name => 'event', :outcome => nil,
+      :user => {:id => '1', :company => 'Socialytical', :another => nil}
     ).to_post
     
     to_post["event[name]"].should == 'event'
+    to_post["event[outcome]"].should == nil
     to_post["user[id]"].should == '1'
     to_post["user[company]"].should == 'Socialytical'
+    to_post["user[another]"].should == nil
   end
   
   it "should serialize with measures" do
     to_post = Starboard::Event.new(
       :name => 'event', 
       :user => {:id => '1', :company => 'Socialytical'},
-      :measures => {:amount => 100.5, :tax => 50.50}
+      :measures => {:amount => 100.5, :tax => 50.50, :another => nil}
     ).to_post
     
     to_post["event[name]"].should == 'event'
@@ -86,5 +89,6 @@ describe Starboard::Event do
     to_post["user[company]"].should == 'Socialytical'
     to_post["measures[amount]"].should == 100.5
     to_post["measures[tax]"].should == 50.50
+    to_post["measures[another]"].should == nil
   end
 end

@@ -22,7 +22,7 @@ module Starboard
       
       if user.is_a?(Hash)
         user.each do |key, value|
-          post["user[#{key}]"] = value
+          post["user[#{key}]"] = value unless value.nil?
         end
       else
         post['user[id]'] = user
@@ -30,13 +30,13 @@ module Starboard
       
       if measures.is_a?(Hash)
         measures.each do |key, value|
-          post["measures[#{key}]"] = value
+          post["measures[#{key}]"] = value unless value.nil?
         end
       end
       
       if event.is_a?(Hash)
         event.each do |key, value|
-          post["event[#{key}]"] = value
+          post["event[#{key}]"] = value unless value.nil?
         end
       end
       
